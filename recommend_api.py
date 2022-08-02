@@ -5,10 +5,6 @@ import argparse
 
 def parse_args():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--host",type=str,help='db server endpoint')
-    parser.add_argument("--user",type=str,help='db login id')
-    parser.add_argument("--db",type=str,help='db name')
-    parser.add_argument("--password",type=str,help='db login password')
     parser.add_argument('--port',type=int,default=5001,help='port number to access from middleware or front')
     args = parser.parse_args()
     return args
