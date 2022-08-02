@@ -6,19 +6,15 @@ this api server provides recommendary model
 pymysql==1.0.2
 flask
 flask_cors
+requests
 ```
 
 `pip install -r requirements.txt`
 
-## api.py
-Because this api server accesses DB server, **should give some information to login DB.**
+## recommend_api.py
 
 ```
-python api.py \
-    --host "db server endpoint" \
-    --user "user id to login DB" \
-    --db "DB name to be accessed" \
-    --password "user password to login DB" \
+python recommend_api.py \
     -- port(optional) "port number(default 5001)" \
 ```
 
