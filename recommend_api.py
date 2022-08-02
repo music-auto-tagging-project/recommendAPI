@@ -1,7 +1,6 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 from src.model import FrequencyModel
-from src.utils import save_user_tag_in_db
 import argparse
 
 def parse_args():
@@ -17,28 +16,29 @@ def parse_args():
 app = Flask (__name__)
 CORS(app)
 
-@app.route('/recommend/<int:userid>',methods=["GET"])
-def recommend_music(userid):
-    model.recommend_user_tag(userid) # 해당 유저의 현재 플레이리스트로 user tag를 갱신(in DB)
-    recommended_music_id_list = model.recommend_music(userid) # 갱신된 user tag를 기반으로 추천 플레이리스트를 갱신(in DB)
+@app.route('/recommend/music',methods=["POST"])
+def recommend_music():
+    user_tag = request.get_json()['userTagList']
+    recommended_music_id_list = model.recommend_music(user_tag)
     return jsonify({"musicIdList":recommended_music_id_list})
+    
+@app.route('/recommend/user-tag',methods=["POST"])
+def recommend_user_tag():
+    playlist = request.get_json()['playlistTagList']
+    user_tag = model.recommend_user_tag(playlist)
+    return jsonify({"userTagList":user_tag})
 
-@app.route('/user/tag',methods=["POST"])
-def update_user_tag():
-    value = request.get_data()
-    value = eval(value.decode("utf-8"))
+@app.route('/recommend/user-tag-music',methods=["POST"])
+def recommend_user_tag_music():
+    playlist = request.get_json()['playlistTagList']
+    user_tag = model.recommend_user_tag(playlist)
+    recommended_music_id_list = model.recommend_music(user_tag)
 
-    userid = value['userId']
-    tagList = value['tagList']
-
-    save_user_tag_in_db(userid,tagList,host=host,user=user,db=db,password=password,tag_id=False,is_fixed=True)
-    return ""    
-
+    return jsonify({"userTagList":user_tag,"musicIdList":recommended_music_id_list})
 
 if __name__ == "__main__":
     args = parse_args()
-    host,user,db,password = args.host, args.user, args.db, args.password
 
-    model = FrequencyModel(host=host,user=user,db=db,password=password)
+    model = FrequencyModel()
 
     app.run(host='0.0.0.0',port=args.port)
