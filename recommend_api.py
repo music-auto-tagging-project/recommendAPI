@@ -5,7 +5,7 @@ import argparse
 
 def parse_args():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--port',type=int,default=5001,help='port number to access from middleware or front')
+    parser.add_argument('--port',type=int,default=5000,help='port number to access from middleware or front')
     args = parser.parse_args()
     return args
 
