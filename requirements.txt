@@ -1,3 +1,4 @@
 flask
 flask_cors
 requests
+pytest==6.2.5
