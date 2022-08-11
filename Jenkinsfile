@@ -8,13 +8,15 @@ node{
         checkout scm
     }
 
-    stage("TEST"){
-        sh"python3 -m pytest tests"
-    }
-
     stage("DOCKER BUILD"){
         docker.withRegistry("https://${ECR_PATH}","ecr:${REGION}:${AWS_CREDENTIAL_ID}"){
             image = docker.build("${ECR_PATH}/${ECR_IMAGE}","--network=host --no-cache")
+        }
+    }
+    
+    stage("TEST"){
+        docker.image("${ECR_PATH}/${ECR_IMAGE}").inside{
+            sh """python3 -m pytest tests"""
         }
     }
 
