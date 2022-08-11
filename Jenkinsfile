@@ -7,6 +7,10 @@ pipeline{
         ECR_IMAGE = "recommend-api-server"
         AWS_CREDENTIAL_ID = "jenkins-aws-moon-credentials"
     }
+    
+    parameters{
+        string(name: 'BUILD_NUM', defaultValue: 'latest', description: 'docker image build number')
+    }
 
     stages{
         stage("INITAL"){
@@ -37,7 +41,7 @@ pipeline{
             steps{
                 script{
                     docker.withRegistry("https://${ECR_PATH}","ecr:${REGION}:${AWS_CREDENTIAL_ID}"){
-                        image.push("v${env.BUILD_NUMBER}")}
+                        image.push("v${params.BUILD_NUM}")}
                 }
             }
         }
@@ -46,7 +50,7 @@ pipeline{
         always{
             script{
                 sh"""
-                docker rmi ${ECR_PATH}/${ECR_IMAGE}:v$BUILD_NUMBER
+                docker rmi ${ECR_PATH}/${ECR_IMAGE}:v${params.BUILD_NUM}
                 docker rmi ${ECR_PATH}/${ECR_IMAGE}:latest
                 """
             }
