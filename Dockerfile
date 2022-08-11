@@ -6,8 +6,8 @@ WORKDIR /app
 ENV PYTHONPATH=/app
 ENV PYTHONUNBUFFERED=1
 
-RUN apt-get update && \
-    apt-get upgrade && \
+RUN apt-get update -y && \
+    apt-get upgrade -y && \
     apt-get install python3-pip -y && \
     pip3 install -r requirements.txt
     
