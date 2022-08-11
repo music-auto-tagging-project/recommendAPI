@@ -46,8 +46,14 @@ pipeline{
         always{
             script{
                 sh"""
-                docker rmi ${ECR_PATH}/${ECR_IMAGE}:v$BUILD_NUMBER
                 docker rmi ${ECR_PATH}/${ECR_IMAGE}:latest
+                """
+            }
+        }
+        success{
+            script{
+                sh"""
+                docker rmi ${ECR_PATH}/${ECR_IMAGE}:v$BUILD_NUMBER
                 """
             }
         }
