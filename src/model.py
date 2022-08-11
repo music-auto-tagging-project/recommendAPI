@@ -14,7 +14,7 @@ class RecommendModel(metaclass=ABCMeta):
         pass
 
     def get_tag_has_music(self,server="http://10.1.3.30:5000/music/tag/all"):
-        return requests.get(server).json()['musicTagList']
+        return requests.get(server).json()
 
 
 from collections import Counter
