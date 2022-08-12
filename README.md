@@ -1,5 +1,5 @@
 # Recommendation API server
-this api server provides recommendary model
+this api server provides recommendary model(test)
 
 ## requirements
 ```
