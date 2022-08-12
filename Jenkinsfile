@@ -1,5 +1,5 @@
 pipeline{
-    agent { label 'lambda-test'}
+    agent any
 
     environment{
         REGION = "ap-northeast-2"
