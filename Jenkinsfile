@@ -28,7 +28,7 @@ pipeline{
             steps{
                 script{
                     docker.image("${ECR_PATH}/${ECR_IMAGE}").inside{
-                        sh """python3 -m pytest tests"""}
+                        sh """python3 -m pytest tests -s"""}
                 }
             }
         }
