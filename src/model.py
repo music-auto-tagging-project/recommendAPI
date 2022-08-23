@@ -39,18 +39,21 @@ class FrequencyModel(RecommendModel):
         tag_frequency = Counter(playlist).most_common()
         k = min(len(tag_frequency),top_n)
 
-        user_tag_id_list=[]
-        user_tag_freq=[]
+        user_tag_id_list={
+            "tagIdList":[],
+            "frequency":[]
+        }
         for tag,freq in tag_frequency[:k]:
             if freq < freq_thresh:
                 break
-            user_tag_id_list.append((tag,freq))
+            user_tag_id_list["tagIdList"].append(tag)
+            user_tag_id_list["frequency"].append(freq)
         
         return user_tag_id_list
 
     def get_music_id_list_by_user_tag(self,user_tag):
-        user_tag_id = [id for id,_ in user_tag]
-        user_tag_freq = [freq for _,freq in user_tag]
+        user_tag_id = user_tag["tagIdList"]
+        user_tag_freq = user_tag["frequency"]
 
         music_id_list_by_user_tag=[]
         for user_tag,user_freq in zip(user_tag_id,user_tag_freq):
