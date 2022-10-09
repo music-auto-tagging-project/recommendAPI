@@ -57,7 +57,7 @@ class FrequencyModel(RecommendModel):
 
         music_id_list_by_user_tag=[]
         for user_tag,user_freq in zip(user_tag_id,user_tag_freq):
-            music_tag_list = [ music_tag for music_tag in self.tag_has_music_list[str(user_tag)] ]
+            music_tag_list = self.tag_has_music_list[str(user_tag)]
             music_id_list_by_user_tag.extend(music_tag_list*user_freq)
 
         return music_id_list_by_user_tag
